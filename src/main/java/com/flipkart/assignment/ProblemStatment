@@ -1,0 +1,90 @@
+Machine Coding
+								 Dynamic menu
+
+Context:
+Dynamic menu cards function similarly to traditional menu cards by displaying the dishes offered by restaurants. However, restaurant owners are increasingly seeking dynamic menu cards over static ones.
+With a static menu card, customers can select any item listed, but dishes will only be prepared if the required ingredients are available in the restaurant.
+Dynamic menu card ensures that customers are not disappointed by having their orders canceled due to ingredient shortages. Instead, items that cannot be prepared due to ingredient unavailability are simply not displayed on the menu, enhancing the customer experience and operational efficiency.
+
+
+Requirements
+
+Dynamic menu cards should support the following functionalities.
+1. API to add ingredients with quantity.
+2. API to get available ingredients with respective quantities.
+3. API to add dishes with required ingredients. Dishes can be added without availability of the ingredients but should not display in the menu card until the ingredient is available.
+4. API to fetch menu cards with the available dishes.
+5. API to order dishes in one or more quantities. You can assume the api will accept only one type of dish for a single order
+6. API should do the validation. For example: If X quantity of a dish d1 can be prepared with available ingredients, and a customer is placing an order for Y quantity (Y > X), the order should be failed with a proper message stating only X qty is available for the selected dish.
+7. If an ingredient is common between two dishes and only one of the dishes can be prepared with the available ingredients. Customers should be able to book any of the dishes. Though once the order is placed for any of the dishes both the dishes should be unavailable from the menu card. For example: Dishes D1 and D2 require 1 quantity of  ingredients I1, the menu should display both the dish D1 and D2. As soon as one of the dishes is being ordered both the dishes should be removed from the menu. (Assuming there is only one quantity of ingredient I1 available in the restaurant. )
+8. If only one quantity of a dish can be prepared with available ingredients. And two customers are trying to book this dish. Only one order should succeed whereas the other should fail with a proper error message. (There should be a unit test case to verify concurrency is being handled properly)
+
+Bonus:
+9. Solve it for, if one dish requires more than 1 type of ingredients.
+
+Assumptions:
+You can assume one dish required only 1 type of ingredients though the quantity of ingredient would differ as per the dish. (*to solve bonus question, this assumption won’t be valid)
+
+Guidelines
+1. Please discuss the solution with an interviewer
+2. Please do not access internet for anything EXCEPT syntax
+3. You are free to use the language of your choice
+4. All code should be your own
+5. Please focus on the Bonus questions only after ensuring the required features are complete and demoable.
+
+
+Expectations
+1. We are not expecting you to write REST API or create UI. It's just a functional APIs are expected here.
+2. Create the sample data yourself. You can put it into a file, test case or main driver program itself.
+3. Code should be demo-able. Either by using a main driver program or test cases.
+4. Code should be modular. Code should have basic OO design. Please do not jam the responsibilities of one class into another.
+5. Code should be extensible. Wherever applicable, use interfaces and contracts between different methods. It should be easy to add/remove functionality without re-writing the entire codebase.
+6. Code should handle edge cases properly and fail gracefully.
+7. Code should be legible, readable and DRY
+
+
+Sample test cases:
+I/P
+	Add ingredients 3
+	I1 2 <Ingredient name, Ingredient quantity>
+	I2 2
+	I3 1
+O/P
+	Ingredient(s) added
+
+I/P
+	Add dishes 4
+	D1 I1 2 <Dish name, Ingredient name, Ingredient quantity>
+	D2 I1 1
+	D3 I2 2
+	D4 I3 1
+O/P
+	Dishes added
+I/P
+	GetMenu
+O/P
+	Available dishes
+	D1
+	D2
+	D3
+	D4
+I/P
+	Order D1 1 <Dish name, Quantity>
+O/P
+	Order placed successfully
+I/P
+	GetMenu
+O/P
+	Dishes
+	D3
+	D4
+I/P
+	Order D3 2
+O/P
+	Couldn’t place your order, only 1 qty of D3 is available.
+I/P
+	Get Ingredients
+O/P
+	IngredientName 	Quantity
+	I2 		2
+	I3 		1
